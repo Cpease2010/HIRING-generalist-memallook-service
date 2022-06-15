@@ -1,0 +1,25 @@
+{
+  "name": "memallook",
+  "version": "1.0.0",
+  "description": "Memory Allocation Simulator",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cpease2010/HIRING-generalist-memallook-service.git"
+  },
+  "keywords": [
+    "javascript",
+    "memory",
+    "allocation",
+    "node"
+  ],
+  "author": "Cory Pease",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cpease2010/HIRING-generalist-memallook-service/issues"
+  },
+  "homepage": "https://github.com/Cpease2010/HIRING-generalist-memallook-service#readme"
+}
