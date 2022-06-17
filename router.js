@@ -1,5 +1,5 @@
 import express from 'express'
-import {New} from './services.js'
+import {New, Alloc} from './services.js'
 const router = express.Router()
 
 router.use((_req, _res, next) => {
@@ -7,10 +7,15 @@ router.use((_req, _res, next) => {
   next()
 })
 
-router.get('/new/:pageAmount/:pageSize', (_req, _res) => {
-  let pageAmount = Number(_req.params.pageAmount),
-      pageSize = Number(_req.params.pageSize)
-  _res.send(New(pageSize, pageAmount))
+router.get('/new/:pageSize/:numberOfPages', (_req, _res) => {
+  let pageSize = Number(_req.params.pageSize),
+      numberOfPages = Number(_req.params.numberOfPages)
+  _res.send(New(pageSize, numberOfPages))
+})
+
+router.get('/alloc/:size', (_req, _res) => {
+  let size = Number(_req.params.size)
+  _res.send(Alloc(size))
 })
 
 router.get('*', (_req, _res) => {
