@@ -6,6 +6,6 @@ export const heapObject = {
   pageSize: 0,
   size: 0,
   availablePages: [],
-  allocated: {pages: [], meta: []},
+  allocated: {pages: [], meta: {}},
   memory: []
 }

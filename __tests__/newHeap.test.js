@@ -11,7 +11,7 @@ describe('newHeap()', () => {
   })
 
   test('should return error message if already created', () => { 
-    expect(newHeap(10,10)).toContain(`Error: Heap already exist, ${heapObject.id}`)
+    expect(newHeap(10,10)).toContain(`Failed: Heap Exist with ID, ${heapObject.id}`)
     expect(heapObject.size).toEqual(1024)
     expect(heapObject.pageSize).toEqual(16)
     expect(heapObject.allocated.pages.length).toEqual(0)

@@ -12,7 +12,7 @@ const newHeap = (pageSize, numberOfPages) => {
     heapObject.size = pageSize * numberOfPages
     return heapObject.id
   } else {
-    return returnError(`Error: Heap already exist, ${heapObject.id}`)
+    return returnError(`Failed: Heap Exist with ID, ${heapObject.id}`)
   }
 }
 
@@ -25,14 +25,22 @@ const alloc = (size) => {
       heapObject.position++
       heapObject.availablePages.shift()
     }
-    heapObject.allocated.meta.push({tag: heapObject.currentTag, size})
+    heapObject.allocated.meta[heapObject.currentTag] = size
     return {tag: heapObject.currentTag++}
   } else {
-    return returnError('Memory Allocation Failed')
+    return returnError('Memory Allocation Failed: HEAP is null OR memory insufficient')
   }
 }
 
-const show = () => { return {pages: heapObject.memory, 'Allocations by tag': heapObject.allocated.meta}}
+const show = () => { 
+  return {
+    pages: heapObject.memory,
+    'Allocations by tag': heapObject.allocated.meta
+  }
+}
 
+const dealloc = (tag) => {
+  return returnError(`Memory Deallocation Failed: Unknown Tag - ${tag}`)
+}
 
-export {newHeap, alloc, show}
+export {newHeap, alloc, show, dealloc}
