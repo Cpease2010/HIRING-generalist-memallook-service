@@ -7,6 +7,6 @@ describe('show()', () => {
     alloc(7)
     alloc(1)
     alloc(53)
-    expect(show()).toStrictEqual({"pages":[0,0,1,2,3,3,3,3,3,3],"Allocations by tag":{"0":20,"1":7,"2":1,"3":53}})
+    expect(show()).toStrictEqual({"pages":[0,0,1,2,3,3,3,3,3,3],"Allocations by tag":{"0":{"size":20,"pagesRequired":2},"1":{"size":7,"pagesRequired":1},"2":{"size":1,"pagesRequired":1},"3":{"size":53,"pagesRequired":6}}})
   });
 });
