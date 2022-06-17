@@ -7,7 +7,7 @@ router.use((_req, _res, next) => {
   next()
 })
 
-router.get('/new/:pageSize/:numberOfPages', (_req, _res) => {
+router.get('/newHeap/:pageSize/:numberOfPages', (_req, _res) => {
   let pageSize = Number(_req.params.pageSize),
       numberOfPages = Number(_req.params.numberOfPages)
   _res.send(newHeap(pageSize, numberOfPages))

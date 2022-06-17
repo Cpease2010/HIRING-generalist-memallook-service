@@ -1,6 +1,6 @@
 import { alloc, newHeap } from "./services.js";
 
-describe('Alloc', () => {
+describe('alloc()', () => {
   test('should return error if no heap exist', () => {
     expect(alloc(10)).toBe('Memory Allocation Failed')
   })

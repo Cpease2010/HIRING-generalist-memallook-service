@@ -4,7 +4,7 @@ import { returnError } from "./util.js"
 const newHeap = (pageSize, numberOfPages) => {
   if (!heapObject.isCreated) {
     for (let i = 0; i < numberOfPages; i++) {
-      heapObject.pages.push('x')
+      heapObject.memory.push('x')
       heapObject.availablePages.push(i) 
     }
     heapObject.isCreated = true
@@ -20,19 +20,19 @@ const alloc = (size) => {
   const pagesRequired = Math.ceil(size / heapObject.pageSize)
   if (heapObject.isCreated && pagesRequired <= heapObject.availablePages.length) {
     for (let i = 0; i < pagesRequired; i++) {
-      heapObject.pages[heapObject.position] = heapObject.currentTag
-      heapObject.allocatedPages.push(heapObject.position)
+      heapObject.memory[heapObject.position] = heapObject.currentTag
+      heapObject.allocated.pages.push(heapObject.position)
       heapObject.position++
       heapObject.availablePages.shift()
     }
+    heapObject.allocated.meta.push({tag: heapObject.currentTag, size})
     return {tag: heapObject.currentTag++}
   } else {
     return returnError('Memory Allocation Failed')
   }
 }
 
-const show = () => {
+const show = () => { return {pages: heapObject.memory, 'Allocations by tag': heapObject.allocated.meta}}
 
-}
 
 export {newHeap, alloc, show}
