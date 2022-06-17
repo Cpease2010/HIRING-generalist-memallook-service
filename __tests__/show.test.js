@@ -1,4 +1,4 @@
-import { alloc, newHeap, show } from "./services";
+import { alloc, newHeap, show } from "../services";
 
 describe('show()', () => {
   test('should show the current state of the heap', () => {

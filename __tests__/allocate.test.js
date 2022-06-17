@@ -1,4 +1,4 @@
-import { alloc, newHeap } from "./services.js";
+import { alloc, newHeap } from "../services.js";
 
 describe('alloc()', () => {
   test('should return error if no heap exist', () => {

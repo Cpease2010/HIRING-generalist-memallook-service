@@ -1,5 +1,5 @@
-import { heapObject } from "./heapObject.js";
-import { newHeap } from "./services.js";
+import { heapObject } from "../heapObject.js";
+import { newHeap } from "../services.js";
 
 describe('newHeap()', () => {
   test('should create new HEAP', () => {
