@@ -18,16 +18,15 @@ const newHeap = (pageSize, numberOfPages) => {
 
 const alloc = (size) => {
   const pagesRequired = Math.ceil(size / heapObject.pageSize)
-  if (heapObject.isCreated && pagesRequired <= heapObject.availablePages) {
-    heapObject.allocated.meta[heapObject.currentTag] = {}
-    heapObject.allocated.meta[heapObject.currentTag]['occupiedPages'] = []
-    heapObject.allocated.meta[heapObject.currentTag]['pagesRequired'] = pagesRequired
-    heapObject.allocated.meta[heapObject.currentTag]['postition'] = heapObject.position
-    heapObject.allocated.meta[heapObject.currentTag]['size'] = size
+  if (pagesRequired <= heapObject.availablePages) {
+    heapObject.tags[heapObject.currentTag] = {}
+    heapObject.tags[heapObject.currentTag]['occupiedPages'] = []
+    heapObject.tags[heapObject.currentTag]['pagesRequired'] = pagesRequired
+    heapObject.tags[heapObject.currentTag]['postition'] = heapObject.position
+    heapObject.tags[heapObject.currentTag]['size'] = size
     for (let i = 0; i < pagesRequired; i++) {
       heapObject.memory[heapObject.position] = heapObject.currentTag
-      heapObject.allocated.meta[heapObject.currentTag].occupiedPages.push(heapObject.position)
-      heapObject.allocated.pages.push(heapObject.position)
+      heapObject.tags[heapObject.currentTag].occupiedPages.push(heapObject.position)
       heapObject.position++
       heapObject.availablePages--
     }
@@ -40,21 +39,22 @@ const alloc = (size) => {
 const show = () => {
   let allocationsByTag = {}
   for (let i = 0; i < heapObject.currentTag; i++) {
-    allocationsByTag[i] = heapObject.allocated.meta[i].size
+    allocationsByTag[i] = heapObject.tags[i].size
   }  
 
   return {
+// heapObject,
     pages: heapObject.memory,
     'Allocations by tag': allocationsByTag
   }
 }
 
 const dealloc = (tag) => {
-  if (heapObject.allocated.meta[tag]) {
-    console.log({tag, deallocFunction: heapObject.allocated.meta[tag]})
-    return `TAG: ${tag} Successfully Deallocated`
+  if (!heapObject.tags[tag]) {
+    return returnError(`Memory Deallocation Failed: Unknown Tag - ${tag}`)
   }
-  return returnError(`Memory Deallocation Failed: Unknown Tag - ${tag}`)
+
+  return `TAG: ${tag} Successfully Deallocated`
 }
 
 export {newHeap, alloc, show, dealloc}

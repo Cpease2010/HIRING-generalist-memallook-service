@@ -6,7 +6,6 @@ describe('newHeap()', () => {
     expect(newHeap(16,64)).toContain(`HEAP-`)
     expect(heapObject.size).toEqual(1024)
     expect(heapObject.pageSize).toEqual(16)
-    expect(heapObject.allocated.pages.length).toEqual(0)
     expect(heapObject.availablePages).toEqual(64)
   })
 
@@ -14,7 +13,6 @@ describe('newHeap()', () => {
     expect(newHeap(10,10)).toContain(`Failed: Heap Exist with ID, ${heapObject.id}`)
     expect(heapObject.size).toEqual(1024)
     expect(heapObject.pageSize).toEqual(16)
-    expect(heapObject.allocated.pages.length).toEqual(0)
     expect(heapObject.availablePages).toEqual(64)
   })
 })
