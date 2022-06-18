@@ -12,6 +12,7 @@ Mason Engineering - Software Engineer exercise
      - `/alloc/:size` to allocate memory
      - `/dealloc/:tag` to deallocate memory by tag
      - `/show` to visualize heap and allocations by tag
+     - `/reset` to delete the heap
 
 # "Memallook" Service - a visual memalloc simulation
 
