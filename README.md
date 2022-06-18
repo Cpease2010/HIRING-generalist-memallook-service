@@ -1,6 +1,18 @@
 Mason Engineering - Software Engineer exercise
 ===
 
+# Quick Start Guide
+  1. Clone this project to your local machine
+  2. Navigate to the project directory
+  3. In terminal run:
+     1. `npm i`
+     2. `npm start`
+  4. In browser visit: [localhost:3000]
+     - `/newHeap/:pageSize/:numberOfPages` to create a new heap
+     - `/alloc/:size` to allocate memory
+     - `/dealloc/:tag` to deallocate memory by tag
+     - `/show` to visualize heap and allocations by tag
+
 # "Memallook" Service - a visual memalloc simulation
 
 Your objective is to write a simple HTTP-based service named `memallook`. This service's primary job
