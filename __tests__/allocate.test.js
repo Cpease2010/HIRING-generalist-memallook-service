@@ -1,8 +1,8 @@
 import { alloc, newHeap } from "../services.js";
 
 describe('alloc()', () => {
-  test('should return error if no heap exist', () => {
-    expect(alloc(10)).toBe('Memory Allocation Failed: HEAP is null OR memory insufficient')
+  test('should fail gracefully when no heap exist', () => {
+    expect(alloc(10)).toBe('Allocation Failed: HEAP is null OR memory insufficient')
   })
 
   test('should track pages when allocated', () => {
@@ -13,6 +13,6 @@ describe('alloc()', () => {
   })
 
   test('should return error when memmory cannot be allocated', () => { 
-    expect(alloc(1000)).toBe('Memory Allocation Failed: HEAP is null OR memory insufficient')
+    expect(alloc(1000)).toBe('Allocation Failed: HEAP is null OR memory insufficient')
   })
 })

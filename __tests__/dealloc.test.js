@@ -1,17 +1,14 @@
-import { heapObject } from '../heapObject.js'
-import { newHeap, alloc, dealloc, show } from '../services.js'
-
+import { getHeapInstance } from '../heap.js'
+import { newHeap, alloc, dealloc } from '../services.js'
 
 describe('deallo()', () => {
 
-  describe('when TAG DOES NOTE exist', () => {
-    test('should return error when tag does not exist', () => {
-      expect(dealloc(99)).toBe('Memory Deallocation Failed: Unknown Tag - 99')
-    })
+  test('should fail gracefully when no heap exist', () => {
+    expect(dealloc(99)).toBe('Deallocation Failed: HEAP is null OR memory insufficient')
   })
 
   describe('when TAG DOES exist', () => {
-    test('should return success when tag exist', () => {
+    test('should return success', () => {
       newHeap(16, 64)
       alloc(8)
       alloc(16)
@@ -21,7 +18,7 @@ describe('deallo()', () => {
     })
 
     test('should update memory matrix', () => {
-      expect(heapObject.memory).toStrictEqual([
+      expect(getHeapInstance().memory).toStrictEqual([
         0, 1, 'x', 'x', 3, 3, 3, 3, 3, 3, 3, 3,
         3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
         3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,

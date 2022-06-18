@@ -1,5 +1,5 @@
 import express from 'express'
-import { newHeap, alloc, show, dealloc } from './services.js'
+import { newHeap, alloc, show, dealloc, reset } from './services.js'
 const router = express.Router()
 
 router.use((_req, _res, next) => {
@@ -27,8 +27,12 @@ router.get('/dealloc/:tag', (_req, _res) => {
   _res.send(dealloc(tag))
 })
 
+router.get('/reset', (_req, _res) => {
+  _res.send(reset())
+})
+
 router.get('*', (_req, _res) => {
-  _res.status(400).send('Bad Request: Please check your path && operation')
+  _res.status(200).send('The specified path OR resource does not exist')
 })
 
 export default router

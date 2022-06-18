@@ -1,60 +1,78 @@
-import { heapObject } from "./heapObject.js"
+import { createHeapInstance, getHeapInstance, resetHeapInstance } from "./heap.js"
 import { returnError } from "./util.js"
 
 const newHeap = (pageSize, numberOfPages) => {
-  if (!heapObject.isCreated) {
+  if (!getHeapInstance().isCreated) {
+    createHeapInstance()
     for (let i = 0; i < numberOfPages; i++) {
-      heapObject.memory.push('x')
-      heapObject.availablePages++
+      getHeapInstance().memory.push('x')
+      getHeapInstance().availablePages++
     }
-    heapObject.isCreated = true
-    heapObject.pageSize = pageSize
-    heapObject.size = pageSize * numberOfPages
-    return heapObject.id
+    getHeapInstance().isCreated = true
+    getHeapInstance().pageSize = pageSize
+    getHeapInstance().size = pageSize * numberOfPages
+    return getHeapInstance().id
   } else {
-    return returnError(`Failed: Heap Exist with ID, ${heapObject.id}`)
+    return returnError(`New Failed: Heap Exist with ID, ${getHeapInstance().id}`)
   }
 }
 
 const alloc = (size) => {
-  const pagesRequired = Math.ceil(size / heapObject.pageSize)
-  if (pagesRequired <= heapObject.availablePages) {
-    heapObject.tags[heapObject.currentTag] = {}
-    heapObject.tags[heapObject.currentTag]['pagesRequired'] = pagesRequired
-    heapObject.tags[heapObject.currentTag]['position'] = heapObject.position
-    heapObject.tags[heapObject.currentTag]['size'] = size
+  const pagesRequired = Math.ceil(size / getHeapInstance().pageSize)
+  let currentTag = getHeapInstance().currentTag
+  const tag = {}
+  if (pagesRequired <= getHeapInstance().availablePages) {
+    tag['pagesRequired'] = pagesRequired
+    tag['position'] = getHeapInstance().position
+    tag['size'] = size
+    getHeapInstance().tags[currentTag] = tag
     for (let i = 0; i < pagesRequired; i++) {
-      heapObject.memory[heapObject.position] = heapObject.currentTag
-      heapObject.position++
-      heapObject.availablePages--
+      getHeapInstance().memory[getHeapInstance().position] = currentTag
+      getHeapInstance().position++
+      getHeapInstance().availablePages--
     }
-    return {tag: heapObject.currentTag++}
+    return { tag: getHeapInstance().currentTag++ }
   } else {
-    return returnError('Memory Allocation Failed: HEAP is null OR memory insufficient')
+    return returnError('Allocation Failed: HEAP is null OR memory insufficient')
   }
 }
 
 const show = () => {
+  if (!getHeapInstance()) {
+    return returnError('Show Failed: HEAP is null OR memory insufficient')
+  }
   const allocationsByTag = {}
-  for (let i = 0; i < heapObject.currentTag; i++) {
-    allocationsByTag[i] = heapObject.tags[i].size
-  }  
+  const tags = getHeapInstance().tags
+  Object.keys(tags).forEach(tag => {
+      allocationsByTag[tag] = tags[tag].size
+  })
   return {
-    pages: heapObject.memory,
+    pages: getHeapInstance().memory,
     'Allocations by tag': allocationsByTag
   }
 }
 
 const dealloc = (tag) => {
-  if (!heapObject.tags[tag]) {
-    return returnError(`Memory Deallocation Failed: Unknown Tag - ${tag}`)
+  try {
+    if (!getHeapInstance().tags[tag]) {
+      return returnError(`Deallocation Failed: Unknown Tag - ${tag}`)
+    }
+    const removals = getHeapInstance().tags[tag].pagesRequired
+    const memory = getHeapInstance().memory
+    let positionInMemory = getHeapInstance().tags[tag].position
+    for (let i = 0; i < removals; i++) {
+      memory[positionInMemory++] = 'x'
+    }
+    
+    delete getHeapInstance().tags[tag]
+    return `TAG: ${tag} Successfully Deallocated`
+  } catch (error) {
+    return returnError('Deallocation Failed: HEAP is null OR memory insufficient')
   }
-  const removals = heapObject.tags[tag].pagesRequired
-  let positionInMemory = heapObject.tags[tag].position
-  for (let i = 0; i < removals; i++) {
-    heapObject.memory[positionInMemory++] = 'x'
-  }
-  return `TAG: ${tag} Successfully Deallocated`
 }
 
-export {newHeap, alloc, show, dealloc}
+const reset = () => {
+  return resetHeapInstance()
+}
+
+export { newHeap, alloc, show, dealloc, reset }
