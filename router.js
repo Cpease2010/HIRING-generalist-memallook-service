@@ -23,7 +23,8 @@ router.get('/show', (_req, _res) => {
 })
 
 router.get('/dealloc/:tag', (_req, _res) => {
-  _res.send(dealloc(_req.params.tag))
+    let tag = Number(_req.params.tag)
+  _res.send(dealloc(tag))
 })
 
 router.get('*', (_req, _res) => {

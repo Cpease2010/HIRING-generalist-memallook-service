@@ -9,9 +9,8 @@ export const heapObject = {
   size: 0,
   tags: {
     0: {
-      occupiedPages: [],
       pagesRequired: 0,
-      postition: 0,
+      position: 0,
       size: 0,
     }
   }
