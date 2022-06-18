@@ -1,5 +1,5 @@
 import express from 'express'
-import {newHeap, alloc, show} from './services.js'
+import { newHeap, alloc, show, dealloc } from './services.js'
 const router = express.Router()
 
 router.use((_req, _res, next) => {
@@ -20,6 +20,10 @@ router.get('/alloc/:size', (_req, _res) => {
 
 router.get('/show', (_req, _res) => {
   _res.send(show())
+})
+
+router.get('/dealloc/:tag', (_req, _res) => {
+  _res.send(dealloc(_req.params.tag))
 })
 
 router.get('*', (_req, _res) => {

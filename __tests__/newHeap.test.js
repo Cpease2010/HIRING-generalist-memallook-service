@@ -7,7 +7,7 @@ describe('newHeap()', () => {
     expect(heapObject.size).toEqual(1024)
     expect(heapObject.pageSize).toEqual(16)
     expect(heapObject.allocated.pages.length).toEqual(0)
-    expect(heapObject.availablePages.length).toEqual(64)
+    expect(heapObject.availablePages).toEqual(64)
   })
 
   test('should return error message if already created', () => { 
@@ -15,6 +15,6 @@ describe('newHeap()', () => {
     expect(heapObject.size).toEqual(1024)
     expect(heapObject.pageSize).toEqual(16)
     expect(heapObject.allocated.pages.length).toEqual(0)
-    expect(heapObject.availablePages.length).toEqual(64)
+    expect(heapObject.availablePages).toEqual(64)
   })
 })
